@@ -58,9 +58,10 @@ src/
 │
 ├── model.py                     → HeatPumpModel (TESPy network setup + design/offdesign)
 ├── run_timeseries.py            → TimeSeriesHeatPumpRunner (maps dataset → model inputs → results)
-├── plots.py                → HeatPumpVisualizer (plots the results)
-└── data/
-    └── HP_case_data.xlsx        → Provided dataset
+└── plots.py                → HeatPumpVisualizer (plots the results)
+
+data/
+└── HP_case_data.xlsx        → Provided dataset
 ```
 
 ---
