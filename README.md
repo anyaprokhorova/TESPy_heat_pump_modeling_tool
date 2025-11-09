@@ -62,6 +62,11 @@ src/
 
 data/
 └── HP_case_data.xlsx        → Provided dataset
+│
+Additional files (generated during runs)
+├── design_state.json            → saved TESPy design state (used for offdesign solves)
+├── system_design.json           → exported network configuration
+└── hp_offdesign_timeseries.csv  → results from time-series runner
 ```
 
 ---
