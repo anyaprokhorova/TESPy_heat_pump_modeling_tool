@@ -39,9 +39,11 @@ class HeatPumpModel:
         nwk.add_conns(c11, c12, c21, c22)
         
 
-        # In our system, the heating-water feed temperature is 40 °C (c21). We choose a
-        # condensing temperature of ~95 °C (=273.15+95 K) as a starting guess, then convert
-        # to bar units. This gives sufficient driving temperature difference for the
+        # In our system, the heating-water feed temperature is 40 °C (c21). A good guess for pressure
+        # can be obtained from CoolProp’s PropsSI function. Therefore, 
+        # We choose a condensing temperature of ~90 °C. We can set the pressure to a slightly 
+        # higher value of that temperature’s corresponding condensation pressure (=273.15+95 K) as a starting guess, 
+        # then convert to bar units. This gives sufficient driving temperature difference for the
         # heat transfer in the condenser.
         p_cond = PSI("P", "Q", 1, "T", 273.15 + 95, self.working_fluid) / 1e5
 
