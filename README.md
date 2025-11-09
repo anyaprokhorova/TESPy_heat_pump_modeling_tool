@@ -32,11 +32,8 @@ The implementation is based on the TESPy heat pump tutorial:
 
 This parametrization ensures:
 
-* stable off-design solves
 * control over thermal input/output at evaporator & condenser
-* avoidance of singular Jacobians caused by over-specifying refrigerant states
-
-This also makes the model reusable: you can plug in **any time series dataset** of temperatures + heat demand.
+* reusablility: plug in **any time series dataset** of temperatures + heat demand.
 
 ---
 
