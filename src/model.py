@@ -86,27 +86,4 @@ class HeatPumpModel:
             "Q_cond": Q_cond_actual
         }
     
-    def visualize_timeseries(self, df_results):
-        import matplotlib.pyplot as plt
-        fig, axs = plt.subplots(3, 1, figsize=(10, 12))
-        
-        axs[0].plot(df_results["time"], df_results["COP"], label="COP")
-        axs[0].set_ylabel("COP")
-        axs[0].legend()
-        axs[0].grid(True)
-        
-        axs[1].plot(df_results["time"], df_results["P_comp_kW"], label="Power (kW)")
-        axs[1].set_ylabel("Compressor Power [kW]")
-        axs[1].legend()
-        axs[1].grid(True)
-        
-        axs[2].plot(df_results["time"], df_results["Q_evap_kW"], label="Q Evaporator (kW)")
-        axs[2].plot(df_results["time"], df_results["Q_cond_kW"], label="Q Condenser (kW)")
-        axs[2].set_ylabel("Heat Transfer [kW]")
-        axs[2].legend()
-        axs[2].grid(True)
-        
-        axs[-1].set_xlabel("Time")
-        plt.tight_layout()
-        plt.show()
 
