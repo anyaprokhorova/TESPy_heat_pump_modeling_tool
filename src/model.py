@@ -66,7 +66,7 @@ class HeatPumpModel:
         Q_design_cd = -1012e3     # W
         Q_design_ev = -1000e3     # W
         
-        # set component design attributes
+        # set component design attributes, pr=1 for simplicity
         cp.set_attr(eta_s=0.85)
         cd.set_attr(Q=Q_design_cd, pr1=1, pr2=1)
         ev.set_attr(Q=Q_design_ev, pr1=1, pr2=1)
