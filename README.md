@@ -8,6 +8,33 @@
 This project implements a **heat pump simulation tool** in Python using the
 [TESPy](https://tespy.readthedocs.io/) library.
 
+### Model Setup & Reference
+
+The heat pump cycle is modeled as a **closed-loop vapor compression cycle** consisting of:
+
+* **Compressor**
+* **Condenser (heat sink)**
+* **Expansion valve**
+* **Evaporator (heat source)**
+
+The evaporator and condenser are modeled as **heat exchangers**, with water streams on the secondary sides (for the heat source and sink).
+
+The implementation is based on the TESPy heat pump tutorial:
+
+🔗 [https://oemof.github.io/heat-pump-tutorial/model/tespy-partload-performance.html](https://oemof.github.io/heat-pump-tutorial/model/tespy-partload-performance.html)
+
+### Why this model?
+
+This parametrization ensures:
+
+* stable off-design solves
+* control over thermal input/output at evaporator & condenser
+* avoidance of singular Jacobians caused by over-specifying refrigerant states
+
+This also makes the model reusable: you can plug in **any time series dataset** of temperatures + heat demand.
+
+---
+
 
 ## Key Features
 
@@ -33,7 +60,7 @@ src/
 
 ---
 
-## ⚙️ How it Works
+## How it Works
 
 ### **HeatPumpModel**
 
