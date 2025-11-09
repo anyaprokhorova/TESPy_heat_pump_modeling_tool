@@ -118,9 +118,9 @@ viz.save("hp_timeseries.png")
 ---
 
 
-### Explanation of TESPy warnings during design and off-design simulations
+## Explanation of TESPy warnings during design and off-design simulations
 
-> **“Solver behaviour and warnings (design + off-design)”**
+### **“Solver behaviour and warnings (design + off-design)”**
 
 
 When running the model under the **design conditions specified in the case**
