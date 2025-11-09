@@ -7,6 +7,9 @@ __pycache__/
 .build/
 dist/
 build/
+src/dummy_model.ipynb
+src/dummy1.ipynb
+src/model_1.py
 
 # Jupyter
 .ipynb_checkpoints/
