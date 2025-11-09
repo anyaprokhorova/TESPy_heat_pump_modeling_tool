@@ -38,8 +38,26 @@ class HeatPumpModel:
         c22 = Connection(cd, "out2", si2, "in1", label="22")
         nwk.add_conns(c11, c12, c21, c22)
         
-        # set some refrigerant side spec
+
+        # In our system, the heating-water feed temperature is 40 °C (c21). We choose a
+        # condensing temperature of ~95 °C (=273.15+95 K) as a starting guess, then convert
+        # to bar units. This gives sufficient driving temperature difference for the
+        # heat transfer in the condenser.
         p_cond = PSI("P", "Q", 1, "T", 273.15 + 95, self.working_fluid) / 1e5
+
+        # At connection c3 (compressor outlet → condenser inlet):
+        # We set a guess for the refrigerant temperature (T = 170 °C).
+        # Reasoning:
+        # - Following the TESPy tutorial “Build a Heat Pump Stepwise”, the condenser inlet
+        #   temperature must be above the consumer feed‐flow temperature to ensure
+        #   sufficient driving temperature difference.  https://tespy.readthedocs.io/en/main/tutorials/heat_pump_steps.html
+        # - In our system, the heating‐water feed upstream of the condenser is 40 °C.
+        #   Therefore we choose a significantly higher refrigerant temperature of 170 °C
+        #   to provide “temperature head” for heat transfer.
+        # - This value is a starting guess for the solver (design mode); actual cycle will
+        #   compute the final condensing pressure based on this and the fluid properties.
+        # - Once design solution converges, one might adjust this guess or replace it with
+        #   a more physically‐consistent parameter (e.g., a fixed terminal temperature difference).
         c3.set_attr(T=170, p=p_cond, fluid={self.working_fluid: 1})
         
         # design duty values
