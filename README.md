@@ -58,7 +58,7 @@ src/
 │
 ├── model.py                     → HeatPumpModel (TESPy network setup + design/offdesign)
 ├── run_timeseries.py            → TimeSeriesHeatPumpRunner (maps dataset → model inputs → results)
-├── visualiser.py                → HeatPumpVisualizer (plots the results)
+├── plots.py                → HeatPumpVisualizer (plots the results)
 └── data/
     └── HP_case_data.xlsx        → Provided dataset
 ```
@@ -108,12 +108,37 @@ runner.save_results("hp_timeseries.csv")
 ### 3. **Visualization**
 
 ```python
-from visualiser import HeatPumpVisualizer
+from plots import HeatPumpVisualizer
 
 viz = HeatPumpVisualizer(figsize=(10, 12))
 viz.plot_timeseries(df_all, title="Heat Pump Performance Over Time")
 viz.save("hp_timeseries.png")
 ```
+
+---
+
+
+### Explanation of TESPy warnings during design and off-design simulations
+
+> **“Solver behaviour and warnings (design + off-design)”**
+
+
+When running the model under the **design conditions specified in the case**
+( Q<sub>evap</sub> = –1000 kW, Q<sub>cond</sub> = –1012 kW, T<sub>source</sub>=40 → 10 °C, T<sub>sink</sub>=40 → 90 °C ), TESPy successfully solves the compressor, condenser and overall mass/energy balances.
+However, TESPy reports warnings on the **evaporator** related to terminal temperature differences (TTD) and heat-exchanger effectiveness:
+
+```
+Invalid value for ttd_u / ttd_l / ttd_min  (value < 0)
+Invalid value for eff_cold / eff_hot      (value < 0)
+```
+
+These messages indicate that, under the fixed design constraints, the internal heat-exchanger model cannot find a *physically feasible temperature approach* on the evaporator side. A negative TTD means that the cold stream would need to be warmer than the hot stream at some point inside the HX, which is thermodynamically impossible. The root cause is that at design we **fully fix the heat duty (Q), inlet and outlet temperatures**. This combination over-constrains the evaporator: TESPy has no flexibility left to adjust mass flow, approach temperature, or refrigerant superheat to achieve a realistic internal temperature profile.
+
+Importantly:
+
+* The **overall heat-pump balance is correct** (Q, P<sub>comp</sub>, COP are solved and consistent).
+* The warnings do **not** indicate a coding error; they highlight that the fixed design targets are **physically aggressive / idealised**, leaving no degrees of freedom for the HX model to satisfy realistic temperature approaches.
+* Similar warnings also appeared for some off-design time-steps in the time-series dataset, where the imposed boundary conditions temporarily push the system outside physically feasible operation.
 
 ---
 
